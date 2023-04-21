@@ -1,3 +1,8 @@
+/*
+López Rosales Jesús Alejandro
+22110104       3°O        POE
+*/
+
 package practicaguiadamenu;
 
 import java.awt.event.KeyEvent;
@@ -161,7 +166,7 @@ public class FormLista extends javax.swing.JFrame {
         if (txtNumero.getText().length() >= tam && caracter != KeyEvent.VK_ENTER) {
             getToolkit().beep();
             lbMensaje.setVisible(true);
-            lbMensaje.setText("Máximo 3 caracteres");
+            lbMensaje.setText("Máximo 3 dígitos");
         }
     }//GEN-LAST:event_txtNumeroKeyTyped
 

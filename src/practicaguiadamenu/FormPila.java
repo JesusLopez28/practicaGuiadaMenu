@@ -1,9 +1,22 @@
+/*
+López Rosales Jesús Alejandro
+22110104       3°O        POE
+*/
+
 package practicaguiadamenu;
+
+import java.awt.event.KeyEvent;
 
 public class FormPila extends javax.swing.JFrame {
 
-    public FormPila() {
+    Form principal;
+    Pila listaNum;
+
+    public FormPila(Form menu, Pila lista) {
         initComponents();
+        principal = menu;
+        listaNum = lista;
+        lbMensaje.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -27,14 +40,34 @@ public class FormPila extends javax.swing.JFrame {
 
         btnPush.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         btnPush.setText("Push");
+        btnPush.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPushActionPerformed(evt);
+            }
+        });
 
         btnPop.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         btnPop.setText("Pop");
+        btnPop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPopActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         txtNumero.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
+        txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,6 +112,52 @@ public class FormPila extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        // TODO add your handling code here:
+        principal.arrayUsuarios[1].setUser("Pedro");
+        principal.arrayUsuarios[1].setPassword("Accesos123");
+        Form.lbEstatus.setText("Usuario: " + principal.arrayUsuarios[1].getUser());
+        principal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnPushActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPushActionPerformed
+        // TODO add your handling code here:
+        int num;
+        num = Integer.parseInt(txtNumero.getText());
+        listaNum.push(num);
+        txtNumero.setText("");
+        txtNumero.requestFocus();
+    }//GEN-LAST:event_btnPushActionPerformed
+
+    private void btnPopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPopActionPerformed
+        // TODO add your handling code here:
+        listaNum.pop();
+    }//GEN-LAST:event_btnPopActionPerformed
+
+    private void txtNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyTyped
+        // TODO add your handling code here:
+        int tam = 2;
+        char caracter = evt.getKeyChar();
+        lbMensaje.setVisible(false);
+        if (caracter == KeyEvent.VK_ENTER) {
+            btnPush.requestFocus();
+        } else {
+            if (!Character.isDigit(caracter)) {
+                getToolkit().beep();
+                evt.consume();
+                lbMensaje.setVisible(true);
+                lbMensaje.setText("Solo captura de números");
+            }
+        }
+
+        if (txtNumero.getText().length() >= tam && caracter != KeyEvent.VK_ENTER) {
+            getToolkit().beep();
+            lbMensaje.setVisible(true);
+            lbMensaje.setText("Máximo 2 dígitos");
+        }
+    }//GEN-LAST:event_txtNumeroKeyTyped
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

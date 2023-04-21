@@ -1,9 +1,22 @@
+/*
+López Rosales Jesús Alejandro
+22110104       3°O        POE
+*/
+
 package practicaguiadamenu;
+
+import java.awt.event.KeyEvent;
 
 public class FormCola extends javax.swing.JFrame {
 
-    public FormCola() {
+    Form principal;
+    Cola listaNum;
+
+    public FormCola(Form menu, Cola lista) {
         initComponents();
+        principal = menu;
+        listaNum = lista;
+        lbMensaje.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -20,6 +33,11 @@ public class FormCola extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         txtNumero.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
+        txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroKeyTyped(evt);
+            }
+        });
 
         lbNumero.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         lbNumero.setText("Ingresa un número:");
@@ -29,12 +47,27 @@ public class FormCola extends javax.swing.JFrame {
 
         btnEncolar.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         btnEncolar.setText("Encolar");
+        btnEncolar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEncolarActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         btnDesencolar.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         btnDesencolar.setText("Desencolar");
+        btnDesencolar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesencolarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,6 +110,52 @@ public class FormCola extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        // TODO add your handling code here:
+        principal.arrayUsuarios[2].setUser("Maria");
+        principal.arrayUsuarios[2].setPassword("Accesos123");
+        Form.lbEstatus.setText("Usuario: " + principal.arrayUsuarios[2].getUser());
+        principal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnEncolarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncolarActionPerformed
+        // TODO add your handling code here:
+        int num;
+        num = Integer.parseInt(txtNumero.getText());
+        listaNum.encolar(num);
+        txtNumero.setText("");
+        txtNumero.requestFocus();
+    }//GEN-LAST:event_btnEncolarActionPerformed
+
+    private void btnDesencolarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesencolarActionPerformed
+        // TODO add your handling code here:
+        listaNum.desencolar();
+    }//GEN-LAST:event_btnDesencolarActionPerformed
+
+    private void txtNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyTyped
+        // TODO add your handling code here:
+        int tam = 4;
+        char caracter = evt.getKeyChar();
+        lbMensaje.setVisible(false);
+        if (caracter == KeyEvent.VK_ENTER) {
+            btnEncolar.requestFocus();
+        } else {
+            if (!Character.isDigit(caracter)) {
+                getToolkit().beep();
+                evt.consume();
+                lbMensaje.setVisible(true);
+                lbMensaje.setText("Solo captura de números");
+            }
+        }
+
+        if (txtNumero.getText().length() >= tam && caracter != KeyEvent.VK_ENTER) {
+            getToolkit().beep();
+            lbMensaje.setVisible(true);
+            lbMensaje.setText("Máximo 4 dígitos");
+        }
+    }//GEN-LAST:event_txtNumeroKeyTyped
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
