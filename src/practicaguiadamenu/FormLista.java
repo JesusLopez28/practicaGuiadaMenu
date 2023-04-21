@@ -1,10 +1,12 @@
 package practicaguiadamenu;
 
+import java.awt.event.KeyEvent;
+
 public class FormLista extends javax.swing.JFrame {
 
     Form principal;
     ListaEnlazada listaNum;
-    
+
     public FormLista(Form menu, ListaEnlazada lista) {
         initComponents();
         principal = menu;
@@ -36,6 +38,11 @@ public class FormLista extends javax.swing.JFrame {
         });
 
         txtNumero.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
+        txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroKeyTyped(evt);
+            }
+        });
 
         lbNumero.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         lbNumero.setText("Ingresa un número:");
@@ -52,12 +59,22 @@ public class FormLista extends javax.swing.JFrame {
         });
 
         txtUsuario.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyTyped(evt);
+            }
+        });
 
         lbUsuario.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         lbUsuario.setText("Usuario:");
 
         btnRegistrar.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,6 +142,58 @@ public class FormLista extends javax.swing.JFrame {
         txtNumero.requestFocus();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private void txtNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroKeyTyped
+        // TODO add your handling code here:
+        int tam = 3;
+        char caracter = evt.getKeyChar();
+        lbMensaje.setVisible(false);
+        if (caracter == KeyEvent.VK_ENTER) {
+            btnAgregar.requestFocus();
+        } else {
+            if (!Character.isDigit(caracter)) {
+                getToolkit().beep();
+                evt.consume();
+                lbMensaje.setVisible(true);
+                lbMensaje.setText("Solo captura de números");
+            }
+        }
+
+        if (txtNumero.getText().length() >= tam && caracter != KeyEvent.VK_ENTER) {
+            getToolkit().beep();
+            lbMensaje.setVisible(true);
+            lbMensaje.setText("Máximo 3 caracteres");
+        }
+    }//GEN-LAST:event_txtNumeroKeyTyped
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        // TODO add your handling code here:
+        principal.arrayUsuarios[0].setUser(txtUsuario.getText());
+        principal.arrayUsuarios[0].setPassword("Acceso123");
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+        // TODO add your handling code here:
+        int tam = 10;
+        char caracter = evt.getKeyChar();
+        lbMensaje.setVisible(false);
+        if (caracter == KeyEvent.VK_ENTER) {
+            btnRegistrar.requestFocus();
+        } else {
+            if (!Character.isLetter(caracter)) {
+                getToolkit().beep();
+                evt.consume();
+                lbMensaje.setVisible(true);
+                lbMensaje.setText("Solo captura de letras");
+            }
+        }
+
+        if (txtUsuario.getText().length() >= tam && caracter != KeyEvent.VK_ENTER) {
+            getToolkit().beep();
+            lbMensaje.setVisible(true);
+            lbMensaje.setText("Máximo 10 caracteres");
+        }
+    }//GEN-LAST:event_txtUsuarioKeyTyped
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -138,13 +207,7 @@ public class FormLista extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormLista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormLista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormLista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FormLista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
